@@ -1,0 +1,235 @@
+{{!-- <h1 class="text-center mt-3">Página de inventario</h1> --}}
+
+<section>
+    <h2 class="text-center mt-3">Mantenedor de productos</h2>
+    <div id="divForm">
+        <form class="w-50 m-auto" id="formulario">
+            <label for="addNombre" class="form-label">Nombre</label>
+            <input required type="text" name="nombre" id="addNombre" class="form-control">
+            <label for="addDescripcion" class="form-label">Descripcion</label>
+            <input required type="text" name="descripcion" id="addDescripcion" class="form-control">
+            <label for="addPrecio" class="form-label">Precio</label>
+            <input required type="number" name="precio" id="addPrecio" class="form-control">
+            <label for="addStock" class="form-label">Stock</label>
+            <input required type="precio" name="stock" id="addStock" class="form-control">
+            <label for="addImagen" class="form-label">Imágen</label>
+            <input required type="text" name="imagen" id="addImagen" class="form-control">
+            <button type="submit" class="btn btn-success mt-2">Agregar</button>
+            <button type="reset" class="btn btn-info mt-2">Limpiar</button>
+
+        </form>
+    </div>
+    
+</section>
+
+<section>
+    <h2>Listado de productos</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col"IMG</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Eliminar</th>
+        <th scope="col">Actualizar</th>
+      </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+
+    </tbody>
+  </table>
+</section>
+
+<!-- Modal UPDATE-->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Actualizar producto:</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formularioUpdate">
+            <input required type="text" name="nombre" id="updateId" class="form-control" disabled>
+            <label for="updateNombre" class="form-label">Nombre</label>
+            <input required type="text" name="nombre" id="updateNombre" class="form-control">
+            <label for="updateDescripcion" class="form-label">Descripcion</label>
+            <input required type="text" name="descripcion" id="updateDescripcion" class="form-control">
+            <label for="updatePrecio" class="form-label">Precio</label>
+            <input required type="number" name="precio" id="updatePrecio" class="form-control">
+            <label for="updateStock" class="form-label">Stock</label>
+            <input required type="precio" name="stock" id="updateStock" class="form-control">
+            <label for="updateImagen" class="form-label">Imágen</label>
+            <input required type="text" name="imagen" id="updateImagen" class="form-control">
+            <button type="submit" class="btn btn-warning mt-2">Actualizar</button>
+        </form>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //agregamos clase active al link de la página concurrida
+  document.querySelector("#linkInventario").classList.add("active");
+
+//FUNCIÓN QUE PERMITE CARGAR LOS PRODUCTOS.
+    const cargarTabla = (productos) => {
+        cuerpoTabla.innerHTML = "";
+
+        let acumuladorFilas= "";
+        productos.forEach(producto => {
+            let template = `
+                <tr>
+                    <th scope="row">${producto.id}</th>
+                    <td><img src="/imagenes/${producto.img}" alt="${producto.nombre}" width="100px"></td>
+                    <td>${producto.nombre}</td>
+                    <td>${producto.precio}</td>
+                    <td>${producto.stock}</td>
+                    <td><button class="btn btn-danger" onclick="eliminarProducto('${producto.id}')">Eliminar</button></td>
+                    <td><button class="btn btn-warning" onclick="preparaUpdate('${producto.id}')">Actualizar</button></td>
+                </tr>
+                `
+            acumuladorFilas+= template;
+            
+        })
+        cuerpoTabla.innerHTML = acumuladorFilas;
+
+    }
+
+//PETICIÓN AL SERVIDOR PARA ELIMINAR UN PRODUCTO.
+    const eliminarProducto = (id) => {
+        fetch("http://localhost:3000/api/productos?id="+id, {method:"DELETE"})
+        .then(response => response.json())
+        .then(data => {
+            if(data.code == 400 || data.code == 500 ){
+                console.log(data.message)
+            }
+            else{
+              cargarTabla(data.productos);
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Algo ha salido mal al cargar los productos.")
+        })
+    }
+
+//FUNCIÓN PARA CARGAR AL FORMULARIO DEL MODAL LOS DATOS DEL PRODUCTO QUE SE QUIERE ACTUALIZAR
+    const preparaUpdate = (id) => {
+
+        fetch("http://localhost:3000/api/productos/"+id)
+            .then(response => response.json())
+            .then(data => {
+                if(data.code == 400 || data.code == 500 ){
+                    console.log(data.message)
+                }
+                else{
+                    updateId.value = data.id;
+                    updateNombre.value = data.nombre;
+                    updateDescripcion.value = data.descripcion;
+                    updatePrecio.value = data.precio;
+                    updateStock.value = data.stock;
+                    updateImagen.value = data.img;
+
+                    const updateModal = new bootstrap.Modal('#updateModal')
+                    updateModal.show()
+                }
+            })
+            .catch(error => {
+                console.log(error)
+                alert("Algo ha salido mal al cargar los productos.")
+            })
+
+
+    }
+
+
+//EVENTO SUBMIT FORMULARIO AGREGAR NUEVOS PRODUCTOS
+    formulario.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let nuevoProducto = {
+            nombre: addNombre.value,
+            descripcion: addDescripcion.value,
+            precio: addPrecio.value,
+            stock: addStock.value,
+            img: addImagen.value
+        }
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        fetch("http://localhost:3000/api/productos", {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify(nuevoProducto)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.code == 500){
+                console.log(data.message)
+            }else{
+              cargarTabla(data.productos);
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Algo ha salido mal al cargar los productos.")
+        })
+    })
+
+
+    //EVENTO SUBMIT FORMULARIO ACTUALIZAR NUEVOS PRODUCTOS
+    formularioUpdate.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let nuevoProducto = {
+            id: updateId.value,
+            nombre: updateNombre.value,
+            descripcion: updateDescripcion.value,
+            precio: updatePrecio.value,
+            stock: updateStock.value,
+            img: updateImagen.value
+        }
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        fetch("http://localhost:3000/api/productos", {
+            method: "PUT",
+            headers: myHeaders,
+            body: JSON.stringify(nuevoProducto)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.code == 500 || data.code == 400){
+                console.log(data.message)
+            }else{
+                alert(data.message)
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Algo ha salido mal al cargar los productos.")
+        })
+    })
+
+
+//PETICIÓN INICIAL AL SERVIDOR PARA TRAER LOS PRODUCTOS EXISTENTES
+  fetch("http://localhost:3000/api/productos")
+        .then(response => response.json())
+        .then(data => {
+            if(data.code == 500){
+                console.log(data.message)
+            }else{
+              cargarTabla(data.productos);
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Algo ha salido mal al cargar los productos.")
+        })
+</script>

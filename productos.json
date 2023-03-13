@@ -1,0 +1,52 @@
+{
+    "productos": [
+        {
+            "id": "fa58b8",
+            "nombre": "Tinaja para 2 o 3 personas",
+            "descripcion": "La tinaja para 2 o 3 personas tiene un diámetro de 135cm, un alto de 105cm exterior. Incluye caldera a leña, rejilla de protección, bancas, escala y llave de recuperación de agua. Es un producto amigable y fácil de mantener.",
+            "precio": "750000",
+            "stock": 1,
+            "img": "13770.jpg"
+        },
+        {
+            "nombre": "Tinaja para 4 persona",
+            "descripcion": "La tinaja para 4 personas tiene un diámetro de 165cm, un alto de 105cm exterior. Incluye caldera a leña, rejilla de protección, bancas, escala y llave de recuperación de agua. Es un producto amigable y fácil de mantener.",
+            "precio": "1050000",
+            "stock": 2,
+            "img": "63332.jpg",
+            "id": "000ce4"
+        },
+        {
+            "id": "04dc52",
+            "nombre": "Tinaja para 6 persona",
+            "descripcion": "La tinaja para 6 personas tiene un diámetro de 185cm, un alto de 105cm exterior. Incluye caldera a leña, rejilla de protección, bancas, escala y llave de recuperación de agua. Es un producto amigable y fácil de mantener.",
+            "precio": "1250000",
+            "stock": "5",
+            "img": "64549.jpg"
+        },
+        {
+            "id": "17c147",
+            "nombre": "Sauna para 2 personas",
+            "descripcion": "Sauna tipo cabina, para 2 personas, de 140cm x 100cmx 200cm de alto. Incluye salamandra a leña, piedras volcanicas,bancas, higrómetro. Listo para usar.",
+            "precio": "790000",
+            "stock": "4",
+            "img": "61824.jpg"
+        },
+        {
+            "id": "19773e",
+            "nombre": "Sauna 4 personas",
+            "descripcion": "Sauna para 4 tipo tonel",
+            "precio": "1250000",
+            "stock": "4",
+            "img": "13602.jpg"
+        },
+        {
+            "id": "19773e",
+            "nombre": "Sauna 4 personas",
+            "descripcion": "Sauna para 4 tipo tonel",
+            "precio": "1250000",
+            "stock": "4",
+            "img": "13602.jpg"
+        }
+    ]
+}

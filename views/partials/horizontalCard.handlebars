@@ -1,0 +1,47 @@
+<div class="card mb-3 mx-auto mt-5" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{img}}" class="img-fluid rounded-start" alt="{{nombre}}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{nombre}}</h5>
+        <p class="card-text">{{descripcion}}</p>
+        <p class="card-text">Stock: {{stock}}</p>
+        <p class="card-text">Precio: {{precio}}</p>
+        <button class="btn btn-primary" onclick="agregarCarro('{{id}}', {{stock}})">Agregar al carro</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    //FUNCIÓN QUE PERMITE AGREGAR PRODUCTOS AL CARRO
+        const agregarCarro = (id, stock) => {
+            try{
+
+                let storageCarro = JSON.parse(localStorage.getItem("productos")) || []
+
+                let buscarProducto = storageCarro.find(producto => producto.id == id)
+                if(buscarProducto){
+                    if(buscarProducto.cantidad >= stock){
+                        buscarProducto.cantidad = stock
+                        alert("Usted alcanzó el stock máximo de productos: " + stock);
+                    }else {
+                        buscarProducto.cantidad = buscarProducto.cantidad +1
+                    }
+                    
+                }else {
+                    storageCarro.push({id, cantidad: 1})
+                }
+                alert("Producto agregado correctamente.")
+                localStorage.setItem("productos", JSON.stringify(storageCarro))
+
+            }catch(error){
+                alert("Ha ocurrido un error al cargar el producto, intente nuevamente.")
+                localStorage.setItem("productos", "[]")
+                location.reload();
+            }
+        }
+</script>

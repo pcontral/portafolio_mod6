@@ -1,0 +1,90 @@
+{
+    "ventas": [
+        {
+            "id": "5bf7f2",
+            "fecha": "11-03-2023",
+            "productos": [
+                {
+                    "id": "f9ff02",
+                    "cantidad": 1
+                },
+                {
+                    "id": "53c4ed",
+                    "cantidad": 2
+                }
+            ],
+            "total": 75000
+        },
+        {
+            "id": "e2cee5",
+            "fecha": "11-03-2023",
+            "productos": [
+                {
+                    "id": "f9ff02",
+                    "cantidad": 1
+                }
+            ],
+            "total": 45000
+        },
+        {
+            "id": "6c9987",
+            "fecha": "11-03-2023",
+            "productos": [
+                {
+                    "id": "f9ff02",
+                    "cantidad": 1
+                }
+            ],
+            "total": 45000
+        },
+        {
+            "id": "11dc4c",
+            "fecha": "12-03-2023",
+            "productos": [
+                {
+                    "id": "04dc52",
+                    "cantidad": 1
+                },
+                {
+                    "id": "fa58b8",
+                    "cantidad": 1
+                }
+            ],
+            "total": 2000000
+        },
+        {
+            "id": "097aa0",
+            "fecha": "12-03-2023",
+            "productos": [
+                {
+                    "id": "19773e",
+                    "cantidad": 1
+                },
+                {
+                    "id": "04dc52",
+                    "cantidad": 1
+                }
+            ],
+            "total": 2500000
+        },
+        {
+            "id": "4f9181",
+            "fecha": "12-03-2023",
+            "productos": [
+                {
+                    "id": "fa58b8",
+                    "cantidad": 1
+                },
+                {
+                    "id": "000ce4",
+                    "cantidad": 1
+                },
+                {
+                    "id": "19773e",
+                    "cantidad": 1
+                }
+            ],
+            "total": 3050000
+        }
+    ]
+}
